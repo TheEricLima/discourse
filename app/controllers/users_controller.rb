@@ -121,6 +121,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def merge
+    UserMerger.new(old_user: fetch_user_from_params,
+                   new_user: current_user,
+                   skip_revision: params[:skip_revision]).merge_users!
+  rescue Exception
+    # TODO: render error
+  end
+
   def username
     params.require(:new_username)
 
